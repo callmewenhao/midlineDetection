@@ -14,7 +14,7 @@
 
 预期结果是获得图像中五个关键点坐标，如下：
 
-<img src="output\readme\a1.png" style="zoom:25%;" />|<img src="output\readme\a2.png" style="zoom:25%;" />|<img src="output\readme\a3.png" style="zoom:25%;" />
+<img src="output\readme\a1.png" style="zoom:20%;" /> |<img src="output\readme\a2.png" style="zoom:20%;" /> |<img src="output\readme\a3.png" style="zoom:20%;" />
 
 ## 数据集
 
@@ -41,7 +41,7 @@ total_epochs: 30
 
 ## 预测结果
 
-<img src="output\readme\pred_output_000.png" style="zoom:40%;" /><img src="output\readme\pred_output_006.png" style="zoom:40%;" /><img src="output\readme\pred_output_032.png" style="zoom:40%;" />
+<img src="output\readme\pred_output_000.png" style="zoom:40%;" />|<img src="output\readme\pred_output_006.png" style="zoom:40%;" />|<img src="output\readme\pred_output_032.png" style="zoom:40%;" />
 
 ## 问题
 
