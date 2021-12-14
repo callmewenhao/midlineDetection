@@ -1,0 +1,5 @@
+model: resnet18
+batch_size: 8
+lr: 5e-4
+total_epochs: 30
+output_path: output
