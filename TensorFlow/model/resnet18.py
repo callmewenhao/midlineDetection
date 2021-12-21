@@ -1,12 +1,14 @@
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras as keras
+from tensorflow.python.keras.engine import training
 from tensorflow.python.keras.layers.advanced_activations import ReLU
 
 class Identity(keras.Model):
     def __init__(self):
         super().__init__()
     
+    @tf.function
     def call(self, x):
         return x
 
@@ -19,7 +21,7 @@ class block(keras.Model):
             strides=stride,
             padding='same'
         )
-        self.bn = keras.layers.BatchNormalization()
+        self.bn1 = keras.layers.BatchNormalization()
         self.relu = keras.layers.ReLU()
         self.conv2 = keras.layers.Conv2D(
             out_dim,
@@ -27,6 +29,7 @@ class block(keras.Model):
             strides=1,
             padding='same'
         )
+        self.bn2 = keras.layers.BatchNormalization()
         # 使用 1*1 卷积核进行下采样
         if stride == 2 and in_dim != out_dim:  # 只有 stride = 2 同时 in_dim != out_dim 时
             self.downsampling = keras.Sequential([
@@ -36,18 +39,18 @@ class block(keras.Model):
             ])
         else:
             self.downsampling = Identity()
-
-    def call(self, x):
-        h = x
-        x = self.conv1(x)
-        x = self.bn(x)
+    @tf.function
+    def call(self, input):
+        h = input
+        x = self.conv1(input)
+        x = self.bn1(x, training=True)
         x = self.relu(x)
         x = self.conv2(x)
-        x = self.bn(x)
+        x = self.bn2(x, training=True)
         x = self.relu(x)
         identity = self.downsampling(h)
-        x = x + identity
-        return x
+        output = x + identity
+        return output
 
 
 class ResNet18(keras.Model):
@@ -73,21 +76,22 @@ class ResNet18(keras.Model):
             blocks_list.append(block(out_dim, out_dim, 1))
         return keras.Sequential(blocks_list)
 
-    def call(self, x):
-        x = self.conv1(x)
+    @tf.function
+    def call(self, input):
+        x = self.conv1(input)
         x = self.MaxPool(x)
-        print(x.shape)
+        # print(x.shape)
 
         x = self.blocks1(x)
         x = self.blocks2(x)
         x = self.blocks3(x)
         x = self.blocks4(x)
-        print(x.shape)
+        # print(x.shape)
 
         x = self.avg(x)
         x = self.flatten(x)
-        x = self.fc(x)
-        return x
+        output = self.fc(x)
+        return output
 
 # 使用示例
 def main():
