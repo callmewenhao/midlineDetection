@@ -11,7 +11,6 @@ def main():
     epochs = 25
     batch_size = 4
     learning_rate = 5e-4
-    checkpoint_path = "output"
 
     train_dataset = get_dataset(
         filename="data\\train\\label.txt", 
