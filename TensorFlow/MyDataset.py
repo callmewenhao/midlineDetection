@@ -11,8 +11,8 @@ def decode_and_resize(filename, label):
         # 判断是否为 jpg 格式图片。如果是，就使用 decode_jpeg，不是则使用 decode_png
         # 针对 png 格式的图片，请使用 decode_png
         tf.image.is_jpeg(image_string),
-        lambda: tf.image.decode_jpeg(image_string),  # 注意修改 channel!
-        lambda: tf.image.decode_png(image_string))
+        lambda: tf.image.decode_jpeg(image_string, 1),  # 注意修改 channel!
+        lambda: tf.image.decode_png(image_string, 1))
     image_resized = tf.image.resize(image_decoded, [64, 64]) / 255.0
     return image_resized, label
 
@@ -32,8 +32,12 @@ def get_dataset(filename="data\\train\\label.txt", image_dir="data\\train", batc
     # print(len(landmarks))
     landmarks = np.array(landmarks)
     landmarks = landmarks.astype('float32').reshape(-1, 5, 2)
-    landmarks[..., 0] /= 94  # 注意修改 size !
-    landmarks[..., 1] /= 60
+    if mode=="train":
+        landmarks[..., 0] /= 94  # 注意修改 size !
+        landmarks[..., 1] /= 60
+    else:
+        landmarks[..., 0] /= 94  # 注意修改 size ! 测试图片和训练图片尺寸不一致
+        landmarks[..., 1] /= 60
     landmarks = tf.constant(landmarks)
     # print(landmarks)
     dataset = tf.data.Dataset.from_tensor_slices((inages_path_list, landmarks))

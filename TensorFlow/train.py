@@ -38,7 +38,8 @@ def main():
                 loss = keras.losses.MSE(y_true=labels, y_pred=y_pead)
                 loss = tf.reduce_mean(loss)
                 if i % 2 == 0:
-                    print(f"epoch:{epoch}/{epochs}, {i+1}th, loss:{loss}")
+                    # print(f"epoch:{epoch}/{epochs}, {i+1}th, loss:{loss.numpy()}")
+                    logger.info(f"epoch:{epoch}/{epochs}, {i+1}th , loss: {loss.numpy()}")
                     losses["train"].append(loss)
                     
             grads = tape.gradient(loss, model.trainable_variables)  # 因为用了 BN， 所以要用.trainable_variables()否则报 warning

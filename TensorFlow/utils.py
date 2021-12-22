@@ -28,7 +28,7 @@ def show_landmarks(image, landmarks):
     # plt.figure("image")
     plt.imshow(image, cmap='gray')
     plt.scatter(landmarks[:, 0], landmarks[:, 1], s=10, marker='.', c='r')
-    plt.pause(0.001)  # pause a bit so that plots are updated
+    # plt.pause(0.001)  # pause a bit so that plots are updated
     # plt.show()
 
 
