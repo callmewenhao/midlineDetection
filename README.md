@@ -3,6 +3,8 @@
 > name：midlineDetection！ヾ(≧▽≦*)o
 >
 > date：2021.12
+>
+> update：2021.12.22 完成 tensorflow 版本的代码
 
 ## 项目介绍
 
@@ -76,7 +78,3 @@ total_epochs: 25
     <img src="PyTorch\output\readme\pred_output_006.png" height="180" width="250" >
     <img src="PyTorch\output\readme\pred_output_032.png" height="180" width="250" >
 </div>
-## 更新
-
-- 2021.12.22 完成 tensorflow 版本的代码
-
